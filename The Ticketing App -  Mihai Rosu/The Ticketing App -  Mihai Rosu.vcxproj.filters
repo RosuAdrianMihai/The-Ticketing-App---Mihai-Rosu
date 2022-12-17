@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Locatie">
+      <UniqueIdentifier>{1847021c-b888-47c1-a3d1-411adc0581ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Locatie\Zona">
+      <UniqueIdentifier>{eb2e894f-bfe5-4952-b556-006b04791b24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Locatie\Zona\Rand">
+      <UniqueIdentifier>{22ab6729-f4d4-496e-a308-112ea43f3f61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Locatie\Zona\Rand\Scaun">
+      <UniqueIdentifier>{0a0cbab2-a928-4222-9fc7-306d0e8be376}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Eveniment">
+      <UniqueIdentifier>{821d5b78-336f-4464-871f-d3c16cec7420}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Bilet">
+      <UniqueIdentifier>{990a27c4-9ed7-43b5-a801-bfe31b1fe5f9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="locatie\locatie.cpp">
+      <Filter>Source Files\Locatie</Filter>
+    </ClCompile>
+    <ClCompile Include="locatie\rand.cpp">
+      <Filter>Source Files\Locatie\Zona\Rand</Filter>
+    </ClCompile>
+    <ClCompile Include="locatie\zona.cpp">
+      <Filter>Source Files\Locatie\Zona</Filter>
+    </ClCompile>
+    <ClCompile Include="locatie\scaun.cpp">
+      <Filter>Source Files\Locatie\Zona\Rand\Scaun</Filter>
+    </ClCompile>
+    <ClCompile Include="eveniment.cpp">
+      <Filter>Source Files\Eveniment</Filter>
+    </ClCompile>
+    <ClCompile Include="bilet.cpp">
+      <Filter>Source Files\Bilet</Filter>
+    </ClCompile>
+    <ClCompile Include="Source.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="locatie\locatie.h">
+      <Filter>Source Files\Locatie</Filter>
+    </ClInclude>
+    <ClInclude Include="locatie\rand.h">
+      <Filter>Source Files\Locatie\Zona\Rand</Filter>
+    </ClInclude>
+    <ClInclude Include="locatie\zona.h">
+      <Filter>Source Files\Locatie\Zona</Filter>
+    </ClInclude>
+    <ClInclude Include="locatie\scaun.h">
+      <Filter>Source Files\Locatie\Zona\Rand\Scaun</Filter>
+    </ClInclude>
+    <ClInclude Include="eveniment.h">
+      <Filter>Source Files\Eveniment</Filter>
+    </ClInclude>
+    <ClInclude Include="bilet.h">
+      <Filter>Source Files\Bilet</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
