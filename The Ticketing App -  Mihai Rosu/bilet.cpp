@@ -45,7 +45,7 @@ Bilet::Bilet() : unique_id(generate_id(nrSecvente, counter_bilete, nrStart)) {
 	Bilet::numarBilete += 1;
 }
 
-Bilet::Bilet(int pretBilet, string nume_participant, const Locatie& l, const Eveniment& ev, int zonaAleasa, int randAles, int locAles) : unique_id(generate_id(nrSecvente, counter_bilete, nrStart)) {
+Bilet::Bilet(int pretBilet, string nume_participant, Locatie& l, const Eveniment& ev, int zonaAleasa, int randAles, int locAles) : unique_id(generate_id(nrSecvente, counter_bilete, nrStart)) {
 	counter_bilete += 1;
 
 	if (pretBilet > 0) {
@@ -71,7 +71,8 @@ Bilet::Bilet(int pretBilet, string nume_participant, const Locatie& l, const Eve
 			int codificareScaun = scauneLibere[locAles - 1].getCodificare();
 
 			this->locatie.setScaunOcupat(zonaAleasa - 1, randAles - 1, codificareScaun, true);
-
+			
+			l.setScaunOcupat(zonaAleasa - 1, randAles - 1, codificareScaun, true);
 
 			Scaun scaunAles;
 

@@ -17,7 +17,7 @@ public:
 	static int numarBilete;
 
 	Bilet();
-	Bilet(int, string, const Locatie&, const Eveniment&, int, int, int);
+	Bilet(int, string, Locatie&, const Eveniment&, int, int, int);
 
 	static int getSumaStransa();
 
