@@ -2,6 +2,9 @@
 
 #include <string>
 
+int Eveniment::sumaBani = 0;
+int Eveniment::numarBilete = 0;
+
 Eveniment::Eveniment() {
 	this->denumire = "Nespecificat";
 	this->data = "Nespecificat";
@@ -98,18 +101,6 @@ void Eveniment::setOra(int ora, int minute) {
 	else {
 		cout << "Ora invalida" << endl;
 	}
-}
-
-
-
-Eveniment& Eveniment::operator=(const Eveniment& ev) {
-	if (this != &ev) {
-		this->denumire = ev.denumire;
-		this->data = ev.data;
-		this->ora = ev.ora;
-	}
-
-	return *this;
 }
 
 istream& operator>>(istream& in, Eveniment& ev) {

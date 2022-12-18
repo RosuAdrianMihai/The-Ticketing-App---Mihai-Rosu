@@ -2,9 +2,6 @@
 
 #include <string>
 
-int Bilet::sumaBani = 0;
-int Bilet::numarBilete = 0;
-
 string generate_id(int nrSecvente, int counter, string nrStart){
 	string id;
 
@@ -42,10 +39,10 @@ Bilet::Bilet() : unique_id(generate_id(nrSecvente, counter_bilete, nrStart)) {
 	this->nume_participant = "";
 	this->pretBilet = 0;
 
-	Bilet::numarBilete += 1;
+	Eveniment::numarBilete += 1;
 }
 
-Bilet::Bilet(int pretBilet, string nume_participant, Locatie& l, const Eveniment& ev, int zonaAleasa, int randAles, int locAles) : unique_id(generate_id(nrSecvente, counter_bilete, nrStart)) {
+Bilet::Bilet(int pretBilet, string nume_participant, Locatie& l, Eveniment& ev, int zonaAleasa, int randAles, int locAles) : unique_id(generate_id(nrSecvente, counter_bilete, nrStart)) {
 	counter_bilete += 1;
 
 	if (pretBilet > 0) {
@@ -73,6 +70,8 @@ Bilet::Bilet(int pretBilet, string nume_participant, Locatie& l, const Eveniment
 			this->locatie.setScaunOcupat(zonaAleasa - 1, randAles - 1, codificareScaun, true);
 			
 			l.setScaunOcupat(zonaAleasa - 1, randAles - 1, codificareScaun, true);
+
+			
 
 			Scaun scaunAles;
 
@@ -103,8 +102,8 @@ Bilet::Bilet(int pretBilet, string nume_participant, Locatie& l, const Eveniment
 				cout << "Codificare scaun: " << scaunAles.getCodificare() << endl;
 				cout << "---------------------------------" << endl;
 
-				Bilet::sumaBani += this->pretBilet;
-				Bilet::numarBilete += 1;
+				Eveniment::sumaBani += this->pretBilet;
+				Eveniment::numarBilete += 1;
 			}
 			else {
 				cout << "Scaunul este deja ocupat sau randul ales este invalid" << endl;

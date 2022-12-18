@@ -13,11 +13,8 @@ private:
 	Eveniment eveniment;
 
 public:
-	static int sumaBani;
-	static int numarBilete;
-
 	Bilet();
-	Bilet(int, string, Locatie&, const Eveniment&, int, int, int);
+	Bilet(int, string, Locatie&, Eveniment&, int, int, int);
 
 	static int getSumaStransa();
 

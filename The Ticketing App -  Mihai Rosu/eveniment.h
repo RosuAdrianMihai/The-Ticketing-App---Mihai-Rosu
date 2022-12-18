@@ -11,6 +11,9 @@ private:
 	string ora;
 
 public:
+	static int sumaBani;
+	static int numarBilete;
+
 	Eveniment();
 	Eveniment(string, int, int, int, int, int);
 
@@ -21,8 +24,6 @@ public:
 	void setDenumire(string);
 	void setData(int, int, int);
 	void setOra(int, int);
-
-	Eveniment& operator=(const Eveniment&);
 
 	friend istream& operator>>(istream&, Eveniment&);
 	friend ostream& operator<<(ostream&, const Eveniment&);
