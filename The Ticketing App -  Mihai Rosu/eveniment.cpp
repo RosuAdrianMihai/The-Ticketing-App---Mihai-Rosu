@@ -2,9 +2,6 @@
 
 #include <string>
 
-int Eveniment::sumaBani = 0;
-int Eveniment::numarBilete = 0;
-
 Eveniment::Eveniment() {
 	this->denumire = "Nespecificat";
 	this->data = "Nespecificat";
@@ -62,6 +59,14 @@ string Eveniment::getOra() {
 	return this->ora;
 }
 
+int Eveniment::getSumaBani() {
+	return this->sumaBani;
+}
+
+int Eveniment::getNumarBilete() {
+	return this->numarBilete;
+}
+
 void Eveniment::setDenumire(string denumire) {
 	this->denumire = denumire;
 }
@@ -103,7 +108,18 @@ void Eveniment::setOra(int ora, int minute) {
 	}
 }
 
+void Eveniment::setSumaBani(int pretBilet) {
+	this->sumaBani += pretBilet;
+}
+
+void Eveniment::setNumarBilete() {
+	this->numarBilete += 1;
+}
+
 istream& operator>>(istream& in, Eveniment& ev) {
+	ev.sumaBani = 0;
+	ev.numarBilete = 0;
+
 	cout << "Introduce denumirea evenimentului:\n";
 
 	in >> ws;

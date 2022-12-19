@@ -33,15 +33,6 @@ int nrSecvente = 4;
 int counter_bilete = 1;
 string nrStart = "123456789";
 
-Bilet::Bilet() : unique_id(generate_id(nrSecvente, counter_bilete, nrStart)) {
-	counter_bilete += 1;
-
-	this->nume_participant = "";
-	this->pretBilet = 0;
-
-	Eveniment::numarBilete += 1;
-}
-
 Bilet::Bilet(int pretBilet, string nume_participant, Locatie& l, Eveniment& ev, int zonaAleasa, int randAles, int locAles) : unique_id(generate_id(nrSecvente, counter_bilete, nrStart)) {
 	counter_bilete += 1;
 
@@ -102,8 +93,8 @@ Bilet::Bilet(int pretBilet, string nume_participant, Locatie& l, Eveniment& ev, 
 				cout << "Codificare scaun: " << scaunAles.getCodificare() << endl;
 				cout << "---------------------------------" << endl;
 
-				Eveniment::sumaBani += this->pretBilet;
-				Eveniment::numarBilete += 1;
+				ev.setSumaBani(pretBilet);
+				ev.setNumarBilete();
 			}
 			else {
 				cout << "Scaunul este deja ocupat sau randul ales este invalid" << endl;
@@ -122,9 +113,6 @@ Bilet::Bilet(int pretBilet, string nume_participant, Locatie& l, Eveniment& ev, 
 	scauneLibere = nullptr;
 }
 
-int Bilet::getSumaStransa() {
-	return Bilet::sumaBani;
-}
 
 int Bilet::getPretBilet() {
 	return this->pretBilet;

@@ -13,10 +13,7 @@ private:
 	Eveniment eveniment;
 
 public:
-	Bilet();
 	Bilet(int, string, Locatie&, Eveniment&, int, int, int);
-
-	static int getSumaStransa();
 
 	int getPretBilet();
 	string getNumeParticipant();
