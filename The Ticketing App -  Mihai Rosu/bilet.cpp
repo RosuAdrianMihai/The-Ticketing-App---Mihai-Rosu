@@ -93,7 +93,7 @@ Bilet::Bilet(int pretBilet, string nume_participant, Locatie& l, Eveniment& ev, 
 				cout << "Codificare scaun: " << scaunAles.getCodificare() << endl;
 				cout << "---------------------------------" << endl;
 
-				ev.setSumaBani(pretBilet);
+				ev.setSumaBani(this->pretBilet);
 				ev.setNumarBilete();
 			}
 			else {
