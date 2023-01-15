@@ -29,6 +29,7 @@ Zona::Zona(int numarRanduri, int numarScaune){
 
 		for (int i = 0; i < numarRanduri; i++) {
 			this->randuri[i].setNumarScaune(numarScaune);
+			this->randuri[i].setNumarRand(i + 1);
 		}
 	}
 	else {
@@ -53,6 +54,7 @@ Zona::Zona(string denumire, int numarRanduri, int numarScaune){
 
 		for (int i = 0; i < numarRanduri; i++) {
 			this->randuri[i].setNumarScaune(numarScaune);
+			this->randuri[i].setNumarRand(i + 1);
 		}
 	}
 	else {
@@ -98,6 +100,9 @@ Zona::~Zona() {
 	if (this->randuri != nullptr) {
 		delete[] this->randuri;
 		this->randuri = nullptr;
+
+		counter -= 1;
+		Zona::nrZone -= 1;
 	}
 }
 
@@ -185,22 +190,45 @@ int Zona::getCodificareScaun(int indexRand, int indexScaun) {
 	}
 }
 
+Rand Zona::getRand(int indexRand) {
+	Rand copie;
+
+	if (indexRand >= 0 && indexRand < this->numarRanduri && this->randuri != nullptr) {
+		copie = this->randuri[indexRand];
+	}
+
+	return copie;
+}
+
+int Zona::getIndexRand(Rand& r) {
+	if (this->randuri != nullptr && this->numarRanduri > 0) {
+		for (int i = 0; i < this->numarRanduri; i++) {
+			if (this->randuri[i].getNumarRand() == r.getNumarRand()) {
+				return i;
+			}
+		}
+	}
+	else {
+		cout << "Nu a fost gasit randul in zona" << endl;
+	}
+}
+
 void Zona::setDenumire(string denumire) {
 	this->denumire = denumire;
 }
 
-void Zona::setLoc(int numarRand, int codificareScaun, bool ocupat){
-	if(numarRand > 0 && numarRand <= this->numarRanduri){
+void Zona::setLoc(int indexRand, int codificareScaun, bool ocupat){
+	if(indexRand >= 0 && indexRand < this->numarRanduri){
 
 		if (this->randuri != nullptr && this->numarRanduri > 0) {
-			int nrScaunePeRand = this->randuri[numarRand - 1].getNumarScaune();
+			int nrScaunePeRand = this->randuri[indexRand].getNumarScaune();
 
 			for (int i = 0; i < nrScaunePeRand; i++) {
 
-				if (this->randuri[numarRand - 1].getCodificareScaun(i) == codificareScaun) {
-					this->randuri[numarRand - 1].setScaun(codificareScaun, ocupat);
+				if (this->randuri[indexRand].getCodificareScaun(i) == codificareScaun) {
+					this->randuri[indexRand].setScaun(codificareScaun, ocupat);
 
-					if (this->randuri[numarRand - 1].getNumarScauneLibere() == 0) {
+					if (this->randuri[indexRand].getNumarScauneLibere() == 0) {
 						this->numarRanduriLibere -= 1;
 					}
 				}
@@ -208,7 +236,7 @@ void Zona::setLoc(int numarRand, int codificareScaun, bool ocupat){
 		}
 	}
 	else {
-		cout << "Numarul de randuri introdus nu este valid" << endl;
+		cout << "Numarul randului este invalid" << endl;
 	}
 }
 
@@ -225,6 +253,92 @@ void Zona::setNumarRanduriScaune(int numarRanduri, int numarScaune) {
 
 		for (int i = 0; i < numarRanduri; i++) {
 			this->randuri[i].setNumarScaune(numarScaune);
+		}
+	}
+}
+
+void Zona::scriereInFisierText(fstream& fisier) {
+	fisier << this->denumire << endl;
+	fisier << this->numarRanduri << endl;
+	fisier << this->numarRanduriLibere << endl;
+
+	if (this->numarRanduri > 0 && this->randuri != nullptr) {
+		Fisier* f;
+
+		for (int i = 0; i < this->numarRanduri; i++) {
+			f = &(this->randuri[i]);
+			f->scriereInFisierText(fisier);
+		}
+	}
+}
+
+void Zona::citireDinFisierText(fstream& fisier) {
+	fisier.ignore();
+	getline(fisier, this->denumire);
+	fisier >> this->numarRanduri;
+	fisier >> this->numarRanduriLibere;
+
+	if (this->numarRanduri > 0) {
+		if (this->randuri != nullptr) {
+			delete[] this->randuri;
+		}
+
+		this->randuri = new Rand[numarRanduri];
+
+		Fisier* f;
+
+		for (int i = 0; i < this->numarRanduri; i++) {
+			f = &(this->randuri[i]);
+			f->citireDinFisierText(fisier);
+		}
+	}
+}
+
+void Zona::scriereInFisierBinar(fstream& fisier) {
+	int nrCaractereDenumire = this->denumire.length();
+
+	fisier.write((char*)&nrCaractereDenumire, sizeof(nrCaractereDenumire));
+	fisier.write(denumire.c_str(), nrCaractereDenumire + 1);
+
+	fisier.write((char*)&numarRanduri, sizeof(numarRanduri));
+	fisier.write((char*)&numarRanduriLibere, sizeof(numarRanduriLibere));
+
+	if (this->numarRanduri > 0 && this->randuri != nullptr) {
+		Fisier* f;
+
+		for (int i = 0; i < this->numarRanduri; i++) {
+			f = &(this->randuri[i]);
+			f->scriereInFisierBinar(fisier);
+		}
+	}
+}
+
+void Zona::citireDinFisierBinar(fstream& fisier) {
+	int nrCaractereDenumire = 0;
+
+	fisier.read((char*)&nrCaractereDenumire, sizeof(nrCaractereDenumire));
+	char* sirDenumire = new char[nrCaractereDenumire + 1];
+
+	fisier.read(sirDenumire, nrCaractereDenumire + 1);
+	this->denumire = sirDenumire;
+
+	delete[] sirDenumire;
+
+	fisier.read((char*)&numarRanduri, sizeof(numarRanduri));
+	fisier.read((char*)&numarRanduriLibere, sizeof(numarRanduriLibere));
+
+	if (this->numarRanduri > 0) {
+		if (this->randuri != nullptr) {
+			delete[] this->randuri;
+		}
+
+		this->randuri = new Rand[numarRanduri];
+
+		Fisier* f;
+
+		for (int i = 0; i < this->numarRanduri; i++) {
+			f = &(this->randuri[i]);
+			f->citireDinFisierBinar(fisier);
 		}
 	}
 }
@@ -316,6 +430,7 @@ istream& operator>>(istream& in, Zona& z){
 			for (int i = 0; i < z.numarRanduri; i++) {
 				cout << "Randul " << i + 1 << endl;
 				in >> z.randuri[i];
+				z.randuri[i].setNumarRand(i + 1);
 
 				if (z.randuri[i].getNumarScauneLibere() == 0) {
 					z.numarRanduriLibere -= 1;

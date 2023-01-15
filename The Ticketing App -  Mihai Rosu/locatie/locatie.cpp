@@ -70,6 +70,8 @@ Locatie::~Locatie() {
 	if (this->zone != nullptr) {
 		delete[] this->zone;
 		this->zone = nullptr;
+
+		counter_loc -= 1;
 	}
 }
 
@@ -87,9 +89,6 @@ Zona* Locatie::getZoneCuScauneLibere() {
 	for (int i = 0; i < numarZone; i++) {
 		if (this->zone[i].getNumarLocuriLibere() > 0) {
 			nrZoneCuScauneLibere += 1;
-		}
-		else {
-			this->numarZoneCuScauneLibere -= 1;
 		}
 	}
 
@@ -246,6 +245,47 @@ string Locatie::getDenumireZona(int index) {
 	return copie.getDenumire();
 }
 
+Zona Locatie::getZona(int index) {
+	Zona copie;
+
+	if (index >= 0 && index < this->numarZone && this->zone != nullptr) {
+		copie = this->zone[index];
+	}
+	
+	return copie;
+}
+
+int Locatie::getNumarZoneLibere() {
+	return this->numarZoneCuScauneLibere;
+}
+
+int Locatie::getIndexZona(Zona& z) {
+	if (this->zone != nullptr && this->numarZone > 0) {
+		for (int i = 0; i < this->numarZone; i++) {
+			if (this->zone[i].getDenumire() == z.getDenumire()) {
+				return i;
+			}
+		}
+	}
+	else {
+		cout << "Zona nu a putut fi gasita in locatia curenta" << endl;
+	}
+}
+
+Zona* Locatie::getZone() {
+	if (this->zone != nullptr && this->numarZone > 0) {
+		Zona* copieZone = new Zona[numarZone];
+
+		for (int i = 0; i < this->numarZone; i++) {
+			copieZone[i] = this->zone[i];
+		}
+
+		return copieZone;
+	}
+
+	return nullptr;
+}
+
 void Locatie::setDenumire(string denumire) {
 	this->denumire = denumire;
 }
@@ -271,7 +311,7 @@ void Locatie::setNumarZone(int numarZone) {
 
 void Locatie::setScaunOcupat(int indexZona, int indexRand, int codificareScaun, bool ocupat) {
 	if (indexZona >= 0 && indexZona < this->numarZone) {
-		this->zone[indexZona].setLoc(indexRand + 1, codificareScaun, ocupat);
+		this->zone[indexZona].setLoc(indexRand, codificareScaun, ocupat);
 
 		if (this->zone[indexZona].getNumarLocuriLibere() == 0) {
 			this->numarZoneCuScauneLibere -= 1;
@@ -308,6 +348,91 @@ void Locatie::setLocatie(int numarZone){
 	}
 	else {
 		cout << "Numarul de zone trebuie sa fie mai mare decat 0" << endl;
+	}
+}
+
+void Locatie::scriereInFisierText(fstream& fisier) {
+	fisier << this->denumire << endl;
+	fisier << this->numarZone << endl;
+	fisier << this->numarZoneCuScauneLibere << endl;
+
+	if (this->numarZone > 0 && this->zone != nullptr) {
+		Fisier* f;
+
+		for (int i = 0; i < this->numarZone; i++) {
+			f = &(this->zone[i]);
+			f->scriereInFisierText(fisier);
+		}
+	}
+}
+
+void Locatie::citireDinFisierText(fstream& fisier) {
+	getline(fisier, this->denumire);
+	fisier >> this->numarZone;
+	fisier >> this->numarZoneCuScauneLibere;
+
+	if (this->numarZone > 0) {
+		if (this->zone != nullptr) {
+			delete[] this->zone;
+		}
+
+		this->zone = new Zona[numarZone];
+
+		Fisier* f;
+
+		for (int i = 0; i < this->numarZone; i++) {
+			f = &(this->zone[i]);
+			f->citireDinFisierText(fisier);
+		}
+	}
+}
+
+void Locatie::scriereInFisierBinar(fstream& fisier) {
+	int nrCaractereDenumire = this->denumire.length();
+
+	fisier.write((char*)&nrCaractereDenumire, sizeof(nrCaractereDenumire));
+	fisier.write(denumire.c_str(), nrCaractereDenumire + 1);
+
+	fisier.write((char*)&numarZone, sizeof(numarZone));
+	fisier.write((char*)&numarZoneCuScauneLibere, sizeof(numarZoneCuScauneLibere));
+
+	if (this->numarZone > 0 && this->zone != nullptr) {
+		Fisier* f;
+
+		for (int i = 0; i < this->numarZone; i++) {
+			f = &(this->zone[i]);
+			f->scriereInFisierBinar(fisier);
+		}
+	}
+}
+
+void Locatie::citireDinFisierBinar(fstream& fisier) {
+	int nrCaractereDenumire = 0;
+
+	fisier.read((char*)&nrCaractereDenumire, sizeof(nrCaractereDenumire));
+	char* sirDenumire = new char[nrCaractereDenumire + 1];
+
+	fisier.read(sirDenumire, nrCaractereDenumire + 1);
+	this->denumire = sirDenumire;
+
+	delete[] sirDenumire;
+
+	fisier.read((char*)&numarZone, sizeof(numarZone));
+	fisier.read((char*)&numarZoneCuScauneLibere, sizeof(numarZoneCuScauneLibere));
+
+	if (this->numarZone > 0) {
+		if (this->zone != nullptr) {
+			delete[] this->zone;
+		}
+
+		this->zone = new Zona[numarZone];
+
+		Fisier* f;
+
+		for (int i = 0; i < this->numarZone; i++) {
+			f = &(this->zone[i]);
+			f->citireDinFisierBinar(fisier);
+		}
 	}
 }
 

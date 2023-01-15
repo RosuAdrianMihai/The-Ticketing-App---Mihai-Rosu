@@ -14,6 +14,10 @@ Scaun::Scaun(bool ocupat) {
 	id += 1;
 }
 
+Scaun::~Scaun() {
+	id -= 1;
+}
+
 bool Scaun::getOcupat() {
 	return this->ocupat;
 }
@@ -30,13 +34,26 @@ void Scaun::setCodificare(int codificare) {
 	this->codificare = codificare;
 }
 
-Scaun& Scaun::operator=(const Scaun& s) {
-	if (this != &s) {
-		this->codificare = s.codificare;
-		this->ocupat = s.ocupat;
+void Scaun::scriereInFisierText(fstream &fisier) {
+	fisier << this->codificare << endl;
+	fisier << this->ocupat << endl;
+}
 
-		return *this;
-	}
+void Scaun::citireDinFisierText(fstream &fisier) {
+
+	fisier >> this->codificare;
+	fisier >> this->ocupat;
+
+}
+
+void Scaun::scriereInFisierBinar(fstream& fisier) {
+	fisier.write((char*)&codificare, sizeof(codificare));
+	fisier.write((char*)&ocupat, sizeof(ocupat));
+}
+
+void Scaun::citireDinFisierBinar(fstream& fisier) {
+	fisier.read((char*)&codificare, sizeof(codificare));
+	fisier.read((char*)&ocupat, sizeof(ocupat));
 }
 
 Scaun Scaun::operator!() {

@@ -1,12 +1,13 @@
 #pragma once
 
-#include <iostream>
+#include "../fisier.h"
 
+#include <iostream>
 #include "rand.h"
 
 using namespace std;
 
-class Zona {
+class Zona : public Fisier {
 private:
 	string denumire;
 	int numarRanduri;
@@ -31,10 +32,18 @@ public:
 	int getCapacitate();
 	int getNumarLocuriLibere();
 	int getCodificareScaun(int, int);
+	Rand getRand(int);
+	int getIndexRand(Rand&);
 
 	void setDenumire(string);
 	void setLoc(int, int, bool);
 	void setNumarRanduriScaune(int, int);
+
+	void scriereInFisierText(fstream&) override;
+	void citireDinFisierText(fstream&) override;
+
+	void scriereInFisierBinar(fstream&) override;
+	void citireDinFisierBinar(fstream&) override;
 
 	Zona& operator=(const Zona&);
 	Rand operator[](int);

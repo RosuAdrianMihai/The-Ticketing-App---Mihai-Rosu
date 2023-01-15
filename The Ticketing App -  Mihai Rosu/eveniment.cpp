@@ -115,6 +115,76 @@ void Eveniment::setSumaBani(int pretBilet) {
 void Eveniment::setNumarBilete() {
 	this->numarBilete += 1;
 }
+void Eveniment::scriereInFisierText(fstream& fisier) {
+	fisier << this->denumire << endl;
+	fisier << this->data << endl;
+	fisier << this->ora << endl;
+	fisier << this->sumaBani << endl;
+	fisier << this->numarBilete << endl;
+}
+
+void Eveniment::citireDinFisierText(fstream& fisier) {
+	fisier >> this->denumire;
+	fisier >> this->data;
+	fisier >> this->ora;
+	fisier >> this->sumaBani;
+	fisier >> this->numarBilete;
+}
+
+void Eveniment::scriereInFisierBinar(fstream& fisier) {
+	int nrCaractereDenumire = this->denumire.length();
+
+	fisier.write((char*)&nrCaractereDenumire, sizeof(nrCaractereDenumire));
+	fisier.write(denumire.c_str(), nrCaractereDenumire + 1);
+
+	int nrCaractereData = this->data.length();
+
+	fisier.write((char*)&nrCaractereData, sizeof(nrCaractereData));
+	fisier.write(data.c_str(), nrCaractereData + 1);
+
+	int nrCaractereOra = this->ora.length();
+
+	fisier.write((char*)&nrCaractereOra, sizeof(nrCaractereOra));
+	fisier.write(ora.c_str(), nrCaractereOra + 1);
+
+	fisier.write((char*)&sumaBani, sizeof(sumaBani));
+	fisier.write((char*)&numarBilete, sizeof(numarBilete));
+}
+
+void Eveniment::citireDinFisierBinar(fstream& fisier) {
+	int nrCaractereDenumire = 0;
+
+	fisier.read((char*)&nrCaractereDenumire, sizeof(nrCaractereDenumire));
+	char* sirDenumire = new char[nrCaractereDenumire + 1];
+
+	fisier.read(sirDenumire, nrCaractereDenumire + 1);
+	this->denumire = sirDenumire;
+
+	delete[] sirDenumire;
+
+	int nrCaractereData = 0;
+
+	fisier.read((char*)&nrCaractereData, sizeof(nrCaractereData));
+	char* sirData = new char[nrCaractereData + 1];
+
+	fisier.read(sirData, nrCaractereData + 1);
+	this->data = sirData;
+
+	delete[] sirData;
+
+	int nrCaractereOra = 0;
+
+	fisier.read((char*)&nrCaractereOra, sizeof(nrCaractereOra));
+	char* sirOra = new char[nrCaractereOra + 1];
+
+	fisier.read(sirOra, nrCaractereOra + 1);
+	this->ora = sirOra;
+
+	delete[] sirOra;
+
+	fisier.read((char*)&sumaBani, sizeof(sumaBani));
+	fisier.read((char*)&numarBilete, sizeof(numarBilete));
+}
 
 istream& operator>>(istream& in, Eveniment& ev) {
 	ev.sumaBani = 0;

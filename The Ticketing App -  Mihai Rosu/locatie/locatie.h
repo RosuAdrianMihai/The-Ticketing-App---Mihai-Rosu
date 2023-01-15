@@ -1,12 +1,13 @@
 #pragma once
 
-#include <iostream>
+#include "../fisier.h"
 
+#include <iostream>
 #include "zona.h"
 
 using namespace std;
 
-class Locatie {
+class Locatie : public Fisier {
 private:
 	string denumire;
 	int numarZone;
@@ -29,11 +30,21 @@ public:
 	Scaun* getScauneDisponibileInZona(int);
 	Rand* getRanduriDisponibileInZona(int);
 	string getDenumireZona(int);
+	Zona getZona(int);
+	int getNumarZoneLibere();
+	int getIndexZona(Zona&);
+	Zona* getZone();
 
 	void setDenumire(string);
 	void setNumarZone(int);
 	void setScaunOcupat(int, int, int, bool);
 	void setLocatie(int);
+
+	void scriereInFisierText(fstream&) override;
+	void citireDinFisierText(fstream&) override;
+
+	void scriereInFisierBinar(fstream&) override;
+	void citireDinFisierBinar(fstream&) override;
 
 	Locatie& operator=(const Locatie&);
 	Zona operator[](int);

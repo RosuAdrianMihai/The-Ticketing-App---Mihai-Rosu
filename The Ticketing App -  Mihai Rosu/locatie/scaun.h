@@ -1,10 +1,12 @@
 #pragma once
 
+#include "../fisier.h"
+
 #include <iostream>
 
 using namespace std;
 
-class Scaun {
+class Scaun : public Fisier {
 private:
 	int codificare;
 	bool ocupat;
@@ -12,6 +14,7 @@ private:
 public:
 	Scaun();
 	Scaun(bool);
+	~Scaun();
 
 	bool getOcupat();
 	int getCodificare();
@@ -19,7 +22,12 @@ public:
 	void setOcupat(bool);
 	void setCodificare(int);
 
-	Scaun& operator=(const Scaun&);
+	void scriereInFisierText(fstream&) override;
+	void citireDinFisierText(fstream&) override;
+
+	void scriereInFisierBinar(fstream&) override;
+	void citireDinFisierBinar(fstream&) override;
+
 	Scaun operator!();
 	operator bool();
 

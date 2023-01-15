@@ -1,12 +1,13 @@
 #pragma once
 
-#include <iostream>
+#include "../fisier.h"
 
+#include <iostream>
 #include "scaun.h"
 
 using namespace std;
 
-class Rand {
+class Rand : public Fisier {
 private:
 	int numarRand;
 	int numarScaune;
@@ -27,6 +28,13 @@ public:
 
 	void setNumarScaune(int);
 	void setScaun(int, bool);
+	void setNumarRand(int);
+
+	void scriereInFisierText(fstream&) override;
+	void citireDinFisierText(fstream&) override;
+
+	void scriereInFisierBinar(fstream&) override;
+	void citireDinFisierBinar(fstream&) override;
 
 	Rand& operator=(const Rand&);
 	Scaun operator[](int index);

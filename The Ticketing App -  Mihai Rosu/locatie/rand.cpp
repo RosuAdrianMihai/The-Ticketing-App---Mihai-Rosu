@@ -1,4 +1,4 @@
-#include "rand.h"
+ #include "rand.h"
 
 int nrRand = 1;
 
@@ -50,6 +50,8 @@ Rand::~Rand() {
 	if (this->scaune != nullptr) {
 		delete[] this->scaune;
 		this->scaune = nullptr;
+
+		nrRand -= 1;
 	}
 }
 
@@ -67,6 +69,8 @@ int Rand::getCodificareScaun(int indexScaun) {
 	}
 	else {
 		cout << "Nu a fost gasit scaunul" << endl;
+		throw exception("Nu a fost gasit scaunul. Index invalid");
+
 		return 0;
 	}
 }
@@ -76,38 +80,26 @@ int Rand::getNumarScauneLibere() {
 }
 
 Scaun* Rand::getScauneDisponibile() {
-	int nrScauneDisponibile = 0;
-	Scaun* scauneDisponibile = nullptr;
+	if (this->scaune != nullptr && this->numarScauneLibere > 0) {
 
-	for (int i = 0; i < this->numarScaune; i++) {
-		if (this->scaune[i].getOcupat() == false) {
-			nrScauneDisponibile++;
-		}
-	}
-
-	if (nrScauneDisponibile > 0) {
-		scauneDisponibile = new Scaun[nrScauneDisponibile];
-
+		Scaun* scauneDisponibile = new Scaun[numarScauneLibere];
 
 		int index = 0;
+		for (int j = 0; j < this->numarScaune; j++) {
 
-		for (int j = 0; j < nrScauneDisponibile; j++) {
-
-			for (int i = index; i < this->numarScaune; i++) {
+			if (this->scaune[j].getOcupat() == false) {
+				scauneDisponibile[index] = this->scaune[j];
 				index++;
 
-				if (this->scaune[i].getOcupat() == false) {
-					int codScaun = this->scaune[i].getCodificare();
-					scauneDisponibile[j].setCodificare(codScaun);
+				if (index == numarScauneLibere) {
 					break;
 				}
 			}
-
 		}
-
+		return scauneDisponibile;
 	}
 
-	return scauneDisponibile;
+	return nullptr;
 }
 
 void Rand::setNumarScaune(int nrScaune) {
@@ -154,6 +146,83 @@ void Rand::setScaun(int codificare, bool ocupat) {
 	}
 	else {
 		cout << "Starea scaunului " << codificare <<" nu a fost schimbata deoarece are deja starea " << ocupat << "   (0 - neocupat, 1 - ocupat)" << endl;
+	}
+}
+
+void Rand::setNumarRand(int nrRand) {
+	this->numarRand = nrRand;
+}
+
+void Rand::scriereInFisierText(fstream& fisier) {
+	fisier << this->numarRand << endl;
+	fisier << this->numarScaune << endl;
+	fisier << this->numarScauneLibere << endl;
+
+	if (this->numarScaune > 0 && this->scaune != nullptr) {
+		Fisier* f;
+
+		for (int i = 0; i < this->numarScaune; i++) {
+			f = &(this->scaune[i]);
+			f->scriereInFisierText(fisier);
+		}
+	}
+}
+
+void Rand::citireDinFisierText(fstream& fisier) {
+
+		if (this->scaune != nullptr) {
+			delete[] this->scaune;
+		}
+
+		fisier >> this->numarRand;
+		fisier >> this->numarScaune;
+		fisier >> this->numarScauneLibere;
+
+		if (this->numarScaune > 0) {
+			this->scaune = new Scaun[numarScaune];
+
+			Fisier* f;
+
+			for (int i = 0; i < this->numarScaune; i++) {
+				f = &(this->scaune[i]);
+				f->citireDinFisierText(fisier);
+			}
+		}
+}
+
+void Rand::scriereInFisierBinar(fstream& fisier){
+	fisier.write((char*)&numarRand, sizeof(numarRand));
+	fisier.write((char*)&numarScaune, sizeof(numarScaune));
+	fisier.write((char*)&numarScauneLibere, sizeof(numarScauneLibere));
+
+	Fisier* f;
+	
+	if (this->numarScaune > 0 && this->scaune != nullptr) {
+		for (int i = 0; i < this->numarScaune; i++) {
+			f = &(this->scaune[i]);
+			f->scriereInFisierBinar(fisier);
+		}
+	}
+}
+
+void Rand::citireDinFisierBinar(fstream& fisier) {
+	fisier.read((char*)&numarRand, sizeof(numarRand));
+	fisier.read((char*)&numarScaune, sizeof(numarScaune));
+	fisier.read((char*)&numarScauneLibere, sizeof(numarScauneLibere));
+
+	if (this->numarScaune > 0) {
+		if (this->scaune != nullptr) {
+			delete[] this->scaune;
+		}
+
+		this->scaune = new Scaun[numarScaune];
+
+		Fisier* f;
+
+		for (int i = 0; i < this->numarScaune; i++) {
+			f = &(this->scaune[i]);
+			f->citireDinFisierBinar(fisier);
+		}
 	}
 }
 
@@ -256,6 +325,8 @@ istream& operator>>(istream& in, Rand& r){
 			for (int i = 0; i < r.numarScaune; i++) {
 				cout << "Adauga informatii pentru scaunul " << i + 1 << endl;
 				in >> r.scaune[i];
+
+				r.scaune[i].setCodificare(i + 1);
 
 				if (r.scaune[i].getOcupat() == true) {
 					r.numarScauneLibere -= 1;

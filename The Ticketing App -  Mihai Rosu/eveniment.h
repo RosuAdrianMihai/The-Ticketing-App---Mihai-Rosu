@@ -1,10 +1,13 @@
 #pragma once
 
+#include "fisier.h"
+
 #include <iostream>
+#include "locatie/locatie.h"
 
 using namespace std;
 
-class Eveniment {
+class Eveniment : public Fisier {
 private:
 	string denumire;
 	string data;
@@ -27,6 +30,12 @@ public:
 	void setOra(int, int);
 	void setSumaBani(int);
 	void setNumarBilete();
+
+	void scriereInFisierText(fstream&) override;
+	void citireDinFisierText(fstream&) override;
+
+	void scriereInFisierBinar(fstream&) override;
+	void citireDinFisierBinar(fstream&) override;
 
 	friend istream& operator>>(istream&, Eveniment&);
 	friend ostream& operator<<(ostream&, const Eveniment&);

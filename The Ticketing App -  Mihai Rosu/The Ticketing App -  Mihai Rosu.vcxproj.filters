@@ -31,6 +31,12 @@
     <Filter Include="Source Files\Bilet">
       <UniqueIdentifier>{990a27c4-9ed7-43b5-a801-bfe31b1fe5f9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Fisier">
+      <UniqueIdentifier>{27ded28f-a71e-47f2-9b47-a94f07d9bf0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Meniu">
+      <UniqueIdentifier>{8a858a73-410a-4327-aa9e-4769ead4ee89}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="locatie\locatie.cpp">
@@ -54,6 +60,9 @@
     <ClCompile Include="Source.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="meniu.cpp">
+      <Filter>Source Files\Meniu</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="locatie\locatie.h">
@@ -73,6 +82,12 @@
     </ClInclude>
     <ClInclude Include="bilet.h">
       <Filter>Source Files\Bilet</Filter>
+    </ClInclude>
+    <ClInclude Include="fisier.h">
+      <Filter>Source Files\Fisier</Filter>
+    </ClInclude>
+    <ClInclude Include="meniu.h">
+      <Filter>Source Files\Meniu</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

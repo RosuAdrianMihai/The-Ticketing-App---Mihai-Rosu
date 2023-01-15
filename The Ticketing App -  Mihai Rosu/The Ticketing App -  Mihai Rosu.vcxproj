@@ -25,15 +25,18 @@
     <ClCompile Include="locatie\rand.cpp" />
     <ClCompile Include="locatie\scaun.cpp" />
     <ClCompile Include="locatie\zona.cpp" />
+    <ClCompile Include="meniu.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bilet.h" />
     <ClInclude Include="eveniment.h" />
+    <ClInclude Include="fisier.h" />
     <ClInclude Include="locatie\locatie.h" />
     <ClInclude Include="locatie\rand.h" />
     <ClInclude Include="locatie\scaun.h" />
     <ClInclude Include="locatie\zona.h" />
+    <ClInclude Include="meniu.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
