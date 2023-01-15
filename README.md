@@ -1,10 +1,12 @@
 # The Ticketing App -  Mihai Rosu
 
-Structura aplicatiei:
+App structure:
 
-clasa Bilet
-- clasa Eveniment
-- clasa Locatie
-   - clasa Zona
-      - clasa Rand
-         - clasa Scaun 
+class Meniu, class Fisier -  for menu and file functionalities
+
+class Bilet
+- class Eveniment
+- class Locatie
+   - class Zona
+      - class Rand
+         - class Scaun 
